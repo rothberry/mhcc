@@ -10,8 +10,7 @@
 # * P(x|y) = P(y|x) * P(x) / P(y) = 1/2 * 1/3 / 1/2 =>    1/3
 # * P'(x|y) = prob of getting car by changing choice =>   2/3
 
-
-def monty_hall(door_picked, switch_doors, num_doors=3.0)
+def monty_hall(door_picked, switch_doors)
   # ? door_picked   =>  which door is initially selected
   # ? switch_doors  =>  will the user switch doors, boolean
   # ? num_doors     =>  number of doors available
@@ -24,7 +23,6 @@ def monty_hall(door_picked, switch_doors, num_doors=3.0)
     # * 2: Success  w/ switch
     # * 3: Failure  w/ no switch
     # * 4: Failure  w/ switch
-
 
   # senario: car is always 1
   # * door_picked > 1
@@ -54,25 +52,32 @@ def monty_hall(door_picked, switch_doors, num_doors=3.0)
   
 end
 
-doors_arr = [1, 2, 3]
-switch_doors_arr = [true, false]
-num_doors = 3.0
-iterations_f = 10000.0
-iterations = iterations_f.to_i
-output_arr = []
 
-iterations.times do 
-  result = monty_hall(doors_arr.sample, switch_doors_arr.sample)
-  if result < 3
+def monty_hall_iterations(iterations, num_doors=3.0)
+  output_arr = []
+  iterations_i = iterations.to_i
+
+  iterations_i.times do 
+    door_picked = rand(1..num_doors.to_i)
+    result = monty_hall(door_picked, [true, false].sample)
     output_arr << result
   end
+  output_arr
 end
 
-out_no_switch   = output_arr.count(1)
-out_switch   = output_arr.count(2)
-out_three = output_arr.count(3)
-out_four  = output_arr.count(4)
+# ? Params
+num_doors = 100.0
+iterations = 1000.0
 
-success = (out_no_switch + out_switch).to_f
-p out_switch / success
+output_arr = monty_hall_iterations(iterations, num_doors)
+
+p success_no_switch   = output_arr.count(1)
+p success_switch      = output_arr.count(2)
+# fail_no_switch      = output_arr.count(3)
+# fail_switch         = output_arr.count(4)
+success = (success_no_switch + success_switch).to_f
+
+p num_doors
+p iterations
+p success_switch / success
 p success
