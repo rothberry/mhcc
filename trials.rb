@@ -15,29 +15,43 @@ def monty_hall(door_picked, switch_doors, num_doors=3.0)
   # ? door_picked   =>  which door is initially selected
   # ? switch_doors  =>  will the user switch doors, boolean
   # ? num_doors     =>  number of doors available
-  # ? 0: goat, 1: car
   # * if user picks 1, then randomly delete 2 or 3
   # * if user picks 2, the delete 3
   # * if user picks 3, the delete 2
 
-  # doors_arr = Array.new(num_doors, door_prob)
-  # door_prob_arr = [door_prob, door_prob_inv]
-  
-  door_prob = (1/num_doors)
-  door_prob_inv = ((num_doors - 1)/num_doors)
-  door_prob__arr = [door_prob, door_prob_inv]
-  door_arr = [1,0]
-  
-  # p door_arr
-  
-  if (door_picked < num_doors)
-    output = true
-  else
-    output = false
-  end
-  
-  output
+  # * Output => 
+    # * 1: Success  w/ no switch
+    # * 2: Success  w/ switch
+    # * 3: Failure  w/ no switch
+    # * 4: Failure  w/ switch
 
+
+  # senario: car is always 1
+  # * door_picked > 1
+  # * if switch_doors => true, then     output = 2
+  # * if switch_doors => false, then    output = 4
+  
+  # * door_picked == 1
+  # * if switch_doors => true, then     output = 1
+  # * if switch_doors => false, then    output = 3
+
+  scen_one    = (door_picked == 1 && !switch_doors)
+  scen_two    = (door_picked > 1 && switch_doors)
+  scen_three  = (door_picked == 1 && switch_doors)
+  scen_four   = (door_picked > 1 && !switch_doors)
+  
+  if scen_one
+    output = 1
+  elsif scen_two
+    output = 2
+  elsif scen_three
+    output = 3
+  else scen_four
+    output = 4
+  end
+
+  output
+  
 end
 
 doors_arr = [1, 2, 3]
@@ -48,9 +62,17 @@ iterations = iterations_f.to_i
 output_arr = []
 
 iterations.times do 
-  output_arr << monty_hall(doors_arr.sample, switch_doors_arr.sample)
+  result = monty_hall(doors_arr.sample, switch_doors_arr.sample)
+  if result < 3
+    output_arr << result
+  end
 end
 
-times_true = output_arr.count(true)
+out_no_switch   = output_arr.count(1)
+out_switch   = output_arr.count(2)
+out_three = output_arr.count(3)
+out_four  = output_arr.count(4)
 
-p (times_true / iterations_f)
+success = (out_no_switch + out_switch).to_f
+p out_switch / success
+p success
