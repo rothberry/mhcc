@@ -63,21 +63,28 @@ def monty_hall_iterations(iterations, num_doors=3.0)
     output_arr << result
   end
   output_arr
+  success_no_switch   = output_arr.count(1)
+  success_switch      = output_arr.count(2)
+
+  success = (success_no_switch + success_switch).to_f
+  
+  percent_success_switch = success_switch / success
+
 end
 
 # ? Params
-num_doors = 100.0
+num_doors = 3.0
 iterations = 1000.0
 
-output_arr = monty_hall_iterations(iterations, num_doors)
+monty_hall_iterations(10000.0, 3.0)
 
-p success_no_switch   = output_arr.count(1)
-p success_switch      = output_arr.count(2)
-# fail_no_switch      = output_arr.count(3)
-# fail_switch         = output_arr.count(4)
-success = (success_no_switch + success_switch).to_f
+# p success_no_switch   = output_arr.count(1)
+# p success_switch      = output_arr.count(2)
+# # fail_no_switch      = output_arr.count(3)
+# # fail_switch         = output_arr.count(4)
+# success = (success_no_switch + success_switch).to_f
 
-p num_doors
-p iterations
-p success_switch / success
-p success
+# p num_doors
+# p iterations
+# p success_switch / success
+# p success
