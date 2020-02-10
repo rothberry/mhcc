@@ -13,30 +13,24 @@
 def monty_hall(door_picked, switch_doors)
   # ? door_picked   =>  which door is initially selected
   # ? switch_doors  =>  will the user switch doors, boolean
-  # ? num_doors     =>  number of doors available
-  # * if user picks 1, then randomly delete 2 or 3
-  # * if user picks 2, the delete 3
-  # * if user picks 3, the delete 2
 
-  # * Output => 
-    # * 1: Success  w/ no switch
-    # * 2: Success  w/ switch
-    # * 3: Failure  w/ no switch
-    # * 4: Failure  w/ switch
-
-  # senario: car is always 1
+  # * door_picked == 1
+  # * if switch_doors => true, then     output = 1
+  # * if switch_doors => false, then    output = 3
   # * door_picked > 1
   # * if switch_doors => true, then     output = 2
   # * if switch_doors => false, then    output = 4
   
-  # * door_picked == 1
-  # * if switch_doors => true, then     output = 1
-  # * if switch_doors => false, then    output = 3
-
   scen_one    = (door_picked == 1 && !switch_doors)
   scen_two    = (door_picked > 1 && switch_doors)
   scen_three  = (door_picked == 1 && switch_doors)
   scen_four   = (door_picked > 1 && !switch_doors)
+
+  # ? Output => 
+    # * 1: Success  w/ no switch
+    # * 2: Success  w/ switch
+    # * 3: Failure  w/ no switch
+    # * 4: Failure  w/ switch
   
   if scen_one
     output = 1
@@ -55,36 +49,30 @@ end
 
 def monty_hall_iterations(iterations, num_doors=3.0)
   output_arr = []
-  iterations_i = iterations.to_i
 
-  iterations_i.times do 
+  iterations.times do 
     door_picked = rand(1..num_doors.to_i)
     result = monty_hall(door_picked, [true, false].sample)
     output_arr << result
   end
   output_arr
-  success_no_switch   = output_arr.count(1)
-  success_switch      = output_arr.count(2)
-
-  success = (success_no_switch + success_switch).to_f
-  
-  percent_success_switch = success_switch / success
-
 end
 
 # ? Params
 num_doors = 3.0
-iterations = 1000.0
+iterations = 10000
+output_arr = monty_hall_iterations(iterations, num_doors)
 
-monty_hall_iterations(10000.0, 3.0)
+# ? OUTPUT
+print 'Successful Trials without switching doors:   ', success_no_switch   = output_arr.count(1)
+puts ''
+print 'Successful Trials by switching doors:        ', success_switch      = output_arr.count(2)
+puts ''
 
-# p success_no_switch   = output_arr.count(1)
-# p success_switch      = output_arr.count(2)
-# # fail_no_switch      = output_arr.count(3)
-# # fail_switch         = output_arr.count(4)
-# success = (success_no_switch + success_switch).to_f
+success = (success_no_switch + success_switch).to_f
 
-# p num_doors
-# p iterations
-# p success_switch / success
-# p success
+print 'Number of doors:                             ', num_doors.to_i
+puts ''
+print 'Number of iterations:                        ', iterations
+puts ''
+puts 'Percent of Successful Trials by switching doors:', success_switch / success
