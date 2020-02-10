@@ -58,7 +58,7 @@ def monty_hall_iterations(iterations, num_doors=3.0)
   output_arr
 end
 
-# ? Params
+# ? Test Params
 num_doors = 3.0
 iterations = 10000
 output_arr = monty_hall_iterations(iterations, num_doors)
